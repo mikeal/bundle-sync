@@ -1,7 +1,10 @@
+'use strict'
+/* eslint-disable no-console */
 const encode = require('./src/encode')
+const rsl = require('raw-sha-links')
 const fs = require('fs')
 
-const encodeCommand = async argv => {
+const getInput = argv => {
   let input
   if (!argv.input) {
     console.error('Reading input from stdin')
@@ -9,8 +12,14 @@ const encodeCommand = async argv => {
   } else {
     input = fs.createReadStream(argv.input)
   }
-  let encoded = await encode(input)
-  process.stdout.write(Buffer.from(encoded))
+  return input
+}
+
+const encodeCommand = async argv => {
+  const input = getInput(argv)
+  const hashes = await encode(input)
+  const encoded = rsl.encode(hashes)
+  console.log(rsl.decode(encoded))
 }
 
 require('yargs') // eslint-disable-line
@@ -26,5 +35,3 @@ require('yargs') // eslint-disable-line
     }
   })
   .argv
-
-

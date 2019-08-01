@@ -1,15 +1,16 @@
+'use strict'
 const chunker = require('rabin-generator')
 const digest = require('digestif')
 
 const _chunker = async function * (input) {
-  for await (let view of chunker(input)) {
+  for await (const view of chunker(input)) {
     yield [digest(view), view]
   }
 }
 
 const encode = async input => {
-  let hashes = []
-  for await (let [hash, view] of _chunker(input)) {
+  const hashes = []
+  for await (const [hash] of _chunker(input)) {
     hashes.push(hash)
   }
   return Promise.all(hashes)

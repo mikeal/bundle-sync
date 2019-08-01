@@ -14,7 +14,10 @@
     "raw-sha-links": "^0.1.4",
     "yargs": "^13.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "aegir": "^20.0.0",
+    "tsame": "^2.0.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mikeal/bundle-sync.git"

@@ -1,5 +1,4 @@
 const chunker = require('rabin-generator')
-const rsl = require('raw-sha-links')
 const digest = require('digestif')
 
 const _chunker = async function * (input) {
@@ -13,7 +12,8 @@ const encode = async input => {
   for await (let [hash, view] of _chunker(input)) {
     hashes.push(hash)
   }
-  return rsl.encode(await Promise.all(hashes))
+  return Promise.all(hashes)
 }
-module.exports = encode
-module.exports.chunker = _chunker
+
+exports.encode = encode
+exports.chunker = _chunker

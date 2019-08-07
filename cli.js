@@ -23,7 +23,7 @@ const configfile = path.join(os.homedir(), '.bundlesync.json')
 let config
 try {
   const buffer = fs.readFileSync(configfile)
-  config = JSON.stringify(buffer.toString()) 
+  config = JSON.stringify(buffer.toString())
 } catch (e) {
   config = {}
 }
@@ -37,7 +37,7 @@ const authenticated = yargs => {
   })
 }
 
-const getToken = async () => {
+const getToken = () => {
   const token = prompt('Gimme a GitHub Token:')
   config.token = token
   console.log('Saving token to ~/.bundlesync.json')
@@ -46,8 +46,9 @@ const getToken = async () => {
 }
 
 const registerCommand = async argv => {
-  if (!argv.token) argv.token = await getToken()
+  if (!argv.token) argv.token = getToken()
   const resp = await register(argv)
+  console.log(resp.success)
 }
 
 const encodeCommand = async argv => {

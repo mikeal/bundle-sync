@@ -1,8 +1,12 @@
 'use strict'
 /* eslint-disable no-console */
 const encode = require('./src/encode')
+const register = require('./src/register')
 const rsl = require('raw-sha-links')
 const fs = require('fs')
+const os = require('os')
+const path = require('path')
+const prompt = require('prompt-sync')()
 
 const getInput = argv => {
   let input
@@ -13,6 +17,37 @@ const getInput = argv => {
     input = fs.createReadStream(argv.input)
   }
   return input
+}
+
+const configfile = path.join(os.homedir(), '.bundlesync.json')
+let config
+try {
+  const buffer = fs.readFileSync(configfile)
+  config = JSON.stringify(buffer.toString()) 
+} catch (e) {
+  config = {}
+}
+
+if (!config.token) config.token = process.env.GHTOKEN
+
+const authenticated = yargs => {
+  yargs.option('token', {
+    desc: 'GitHub token.',
+    default: config.token
+  })
+}
+
+const getToken = async () => {
+  const token = prompt('Gimme a GitHub Token:')
+  config.token = token
+  console.log('Saving token to ~/.bundlesync.json')
+  fs.writeFileSync(configfile, Buffer.from(JSON.stringify(config)))
+  return token
+}
+
+const registerCommand = async argv => {
+  if (!argv.token) argv.token = await getToken()
+  const resp = await register(argv)
 }
 
 const encodeCommand = async argv => {
@@ -33,5 +68,12 @@ require('yargs') // eslint-disable-line
         desc: 'Input file (bundle.js) to encode.'
       })
     }
+  })
+  .command({
+    command: 'register [name]',
+    aliases: ['r'],
+    desc: 'Register a named bundle.',
+    handler: registerCommand,
+    builder: yargs => authenticated(yargs)
   })
   .argv

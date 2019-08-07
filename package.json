@@ -10,7 +10,9 @@
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (https://www.mikealrogers.com/)",
   "license": "(Apache-2.0 AND MIT)",
   "dependencies": {
+    "bent": "^6.0.1",
     "digestif": "0.0.3",
+    "prompt-sync": "^4.1.7",
     "rabin-generator": "0.0.1",
     "raw-sha-links": "^0.1.4",
     "yargs": "^13.3.0"

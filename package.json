@@ -1,7 +1,8 @@
 {
   "name": "bundle-sync",
-  "version": "0.0.0",
+  "version": "0.0.0-dev",
   "main": "cli.js",
+  "description": "Sync your bundle",
   "scripts": {
     "test": "aegir test -t node",
     "pretest": "aegir lint"
@@ -31,6 +32,5 @@
   "bugs": {
     "url": "https://github.com/mikeal/bundle-sync/issues"
   },
-  "homepage": "https://github.com/mikeal/bundle-sync#readme",
-  "description": ""
+  "homepage": "https://github.com/mikeal/bundle-sync#readme"
 }

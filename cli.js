@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict'
 /* eslint-disable no-console */
 const encode = require('./src/encode')

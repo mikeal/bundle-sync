@@ -2,7 +2,7 @@
   "name": "bundle-sync",
   "version": "0.0.0-dev",
   "main": "cli.js",
-  "description": "Sync your bundle",
+  "description": "Sync your bundle!",
   "scripts": {
     "test": "aegir test -t node",
     "pretest": "aegir lint"
@@ -14,12 +14,12 @@
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (https://www.mikealrogers.com/)",
   "license": "(Apache-2.0 AND MIT)",
   "dependencies": {
-    "bent": "^6.0.1",
-    "digestif": "0.0.3",
+    "bent": "^6.0.5",
+    "digestif": "0.1.5",
     "prompt-sync": "^4.1.7",
     "rabin-generator": "0.0.1",
-    "raw-sha-links": "^0.1.4",
-    "yargs": "^13.3.0"
+    "raw-sha-links": "^0.3.3",
+    "yargs": "^14.0.0"
   },
   "devDependencies": {
     "aegir": "^20.0.0",

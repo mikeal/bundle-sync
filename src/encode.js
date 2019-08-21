@@ -16,5 +16,6 @@ const encode = async input => {
   return Promise.all(hashes)
 }
 
-exports.encode = encode
-exports.chunker = _chunker
+module.exports = encode
+module.exports.encode = encode
+module.exports.chunker = _chunker

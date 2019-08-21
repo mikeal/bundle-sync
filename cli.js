@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 const encode = require('./src/encode')
 const register = require('./src/register')
+const push = require('./src/push')
 const rsl = require('raw-sha-links')
 const fs = require('fs')
 const os = require('os')
@@ -56,20 +57,42 @@ const encodeCommand = async argv => {
   const input = getInput(argv)
   const hashes = await encode(input)
   const encoded = rsl.encode(hashes)
-  console.log(rsl.decode(encoded))
+  if (argv._[0] === 'encode') console.log(rsl.decode(encoded))
+  return encoded
+}
+
+const inputOption = yargs => {
+  yargs.positional('input', {
+    desc: 'Input file (bundle.js) to encode.'
+  })
+}
+
+const pushCommand = async argv => {
+  const input = getInput(argv)
+  try {
+    await push(input, argv.token)
+  } catch (e) {
+    console.log((await e.responseBody).toString())
+  }
 }
 
 require('yargs') // eslint-disable-line
+  .command({
+    command: 'push [input]',
+    aliases: ['p'],
+    desc: 'Push bundle to service.',
+    handler: pushCommand,
+    builder: yargs => {
+      inputOption(yargs)
+      authenticated(yargs)
+    }
+  })
   .command({
     command: 'encode [input]',
     aliases: ['e', 'enc'],
     desc: 'Encode bundle and output raw-sha-links block.',
     handler: encodeCommand,
-    builder: yargs => {
-      yargs.positional('input', {
-        desc: 'Input file (bundle.js) to encode.'
-      })
-    }
+    builder: inputOption
   })
   .command({
     command: 'register [name]',
